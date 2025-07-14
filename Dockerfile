@@ -10,6 +10,8 @@ RUN dnf install -y make gcc-c++ python3 && \
 
 RUN npm install express
 
+RUN npm install --omit=dev
+
 USER 1001
 
 WORKDIR /app
@@ -17,8 +19,6 @@ WORKDIR /app
 COPY restart.js ./
 
 COPY public ./public
-
-RUN npm install --omit=dev
 
 EXPOSE 3000
 
