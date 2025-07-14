@@ -8,6 +8,8 @@ RUN curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/lin
 RUN dnf install -y make gcc-c++ python3 && \
     dnf clean all
 
+RUN npm install express
+
 USER 1001
 
 WORKDIR /app
@@ -16,7 +18,6 @@ COPY restart.js ./
 
 COPY public ./public
 
-RUN npm install express
 RUN npm install --omit=dev
 
 EXPOSE 3000
