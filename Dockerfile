@@ -1,17 +1,23 @@
-FROM registry.redhat.io/ubi8/nodejs-22
+FROM registry.access.redhat.com/ubi8/nodejs-22:latest
 
-RUN curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.18.19/openshift-client-linux-ppc64le-rhel8-4.18.19.tar.gz | \
-    tar -xzv -C /usr/local/bin && \
+USER root
+
+RUN curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz | tar -C /usr/local/bin -xzf - && \
     chmod +x /usr/local/bin/oc
+
+RUN dnf install -y make gcc-c++ python3 && \
+    dnf clean all
+
+USER 1001
 
 WORKDIR /app
 
-#COPY package*.json ./
 COPY restart.js ./
 
 COPY public ./public
 
 RUN npm install express
+RUN npm install --omit=dev
 
 EXPOSE 3000
 
