@@ -1,12 +1,5 @@
 FROM registry.redhat.io/ubi8/nodejs-22
 
-RUN apk add --no-cache \
-    curl \
-    tar \
-    gzip \
-    ca-certificates \
-    bash
-
 RUN curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz | \
     tar -xzv -C /usr/local/bin && \
     chmod +x /usr/local/bin/oc
