@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM registry.redhat.io/ubi8/nodejs-22
 
 RUN apk add --no-cache \
     curl \
