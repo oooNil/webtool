@@ -1,0 +1,7 @@
+apiVersion: 
+kind: ClusterRoleBinding
+metadata:
+  name: 
+subjects:
+
+roleRef:
