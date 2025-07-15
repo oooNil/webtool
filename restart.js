@@ -44,7 +44,6 @@ app.post('/restart-amq', async (req, res) => {
   }
 
   const namespace = `${env}-${component}`;
-  const namespace = `${env}-${component}`;
   const routeName = `${component}-amq-wconsj-0-svc-rte`;
   
   try {
