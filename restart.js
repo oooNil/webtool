@@ -49,7 +49,7 @@ app.post('/restart-amq', async (req, res) => {
   try {
     console.log(`1`);
     //
-    const routeJson = exec(`oc get route ${routeName} -n ${namespace} -o json`).toString();
+    const routeJson = exec(`oc get route ${routeName} -n ${namespace} -o json`);
     console.log(`2`);
     const route = JSON.parse(routeJson);
     console.log(`3`);
