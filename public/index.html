@@ -410,7 +410,7 @@
                 addLog(`Starting AMQ restart for ${env}-${component}`, 'info');
                           
                 try {
-                  const response = await fetch('http://localhost:3000/restart-amq', {
+                  const response = await fetch('/restart-amq', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ env, component })
