@@ -44,8 +44,14 @@ app.post('/restart-amq', async (req, res) => {
   }
 
   const namespace = `${env}-${component}`;
+  const namespace = `${env}-${component}`;
+  const routeName = `${component}-amq-wconsj-0-svc-rte`;
   
   try {
+    //
+    const routeJson = execSync(`oc get route ${routeName} -n ${namespace} -o json`).toString();
+    const route = JSON.parse(routeJson);
+    
     //
     await executeCommand(`oc patch ActiveMQArtemis ${component}-amq -n ${namespace} -p '{"spec":{"deploymentPlan":{"size":0}}}' --type merge`);
     
@@ -54,6 +60,18 @@ app.post('/restart-amq', async (req, res) => {
     
     //
     await executeCommand(`oc patch ActiveMQArtemis ${component}-amq -n ${namespace} -p '{"spec":{"deploymentPlan":{"size":1}}}' --type merge`);
+
+    //
+    if (route.metadata?.ownerReferences){
+      console.log(`[${routeName}] Found ownerReferences, will remove`);
+      await executeCommand(`oc patch route ${component}-amq-wconsj-0-svc-rte -n ${namespace} --type=json -p='[{"op": "remove", "path": "/metadata/ownerReferences"}]'`);
+      console.log(`\n[${routeName}] Successfully updated route configuration`);
+    }
+    else{
+      console.log(`[${routeName}] No ownerReferences found, skipping removal`);
+    }
+    await executeCommand(`oc patch route ${component}-amq-wconsj-0-svc-rte -n ${namespace} --type=merge -p '{"spec": {"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Allow"}}}'`);
+    console.log(`\n[${routeName}] Successfully updated route configuration`);
     
     res.json({ 
       success: true,
