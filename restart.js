@@ -3,6 +3,12 @@ const { exec } = require('child_process');
 const app = express();
 const port = 3000;
 
+const frontendDir = path.resolve(currentDir, './public');
+app.use(express.static(frontendDir));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendDir, 'index.html'));
+});
+
 //
 app.use(express.json());
 
