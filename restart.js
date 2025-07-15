@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const path = require('path');
 
+const currentDir = __dirname;
 const frontendDir = path.resolve(currentDir, './public');
 app.use(express.static(frontendDir));
 app.get('/', (req, res) => {
