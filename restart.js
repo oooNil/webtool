@@ -3,6 +3,15 @@ const { exec } = require('child_process');
 const app = express();
 const port = 3000;
 const path = require('path');
+const cors = require('cors');
+
+const corsOptions = {
+  origin: '*',
+  methods:
+  'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionSuccessStatus: 204
+};
 
 const currentDir = __dirname;
 const frontendDir = path.resolve(currentDir, './public');
