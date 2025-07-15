@@ -2,6 +2,7 @@ const express = require('express');
 const { exec } = require('child_process');
 const app = express();
 const port = 3000;
+const path = require('path');
 
 const frontendDir = path.resolve(currentDir, './public');
 app.use(express.static(frontendDir));
