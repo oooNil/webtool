@@ -47,9 +47,12 @@ app.post('/restart-amq', async (req, res) => {
   const routeName = `${component}-amq-wconsj-0-svc-rte`;
   
   try {
+    console.log(`1`);
     //
     const routeJson = exec(`oc get route ${routeName} -n ${namespace} -o json`).toString();
+    console.log(`2`);
     const route = JSON.parse(routeJson);
+    console.log(`3`);
     
     //
     await executeCommand(`oc patch ActiveMQArtemis ${component}-amq -n ${namespace} -p '{"spec":{"deploymentPlan":{"size":0}}}' --type merge`);
