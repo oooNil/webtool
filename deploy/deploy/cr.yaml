@@ -1,0 +1,5 @@
+apiVersion: 
+kind: ClusterRole
+metadata:
+  name: amq-access-cr
+rules:
