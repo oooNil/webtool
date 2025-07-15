@@ -70,6 +70,7 @@ app.post('/restart-amq', async (req, res) => {
     else{
       console.log(`[${routeName}] No ownerReferences found, skipping removal`);
     }
+    await new Promise(resolve => setTimeout(resolve, 3000));
     await executeCommand(`oc patch route ${component}-amq-wconsj-0-svc-rte -n ${namespace} --type=merge -p '{"spec": {"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Allow"}}}'`);
     console.log(`\n[${routeName}] Successfully updated route configuration`);
     
