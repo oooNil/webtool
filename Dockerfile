@@ -19,7 +19,7 @@ COPY --chown=1001:0 restart.js ./
 
 COPY --chown=1001:0 public ./public
 
-RUN npm install express
+RUN npm install express cors
 RUN npm install --omit=dev
 
 EXPOSE 3000
