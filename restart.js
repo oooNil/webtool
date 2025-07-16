@@ -62,6 +62,9 @@ app.post('/restart-amq', async (req, res) => {
     await executeCommand(`oc patch ActiveMQArtemis ${component}-amq -n ${namespace} -p '{"spec":{"deploymentPlan":{"size":1}}}' --type merge`);
 
     //
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    //
     if (route.metadata?.ownerReferences){
       console.log(`[${routeName}] Found ownerReferences, will remove`);
       await executeCommand(`oc patch route ${component}-amq-wconsj-0-svc-rte -n ${namespace} --type=json -p='[{"op": "remove", "path": "/metadata/ownerReferences"}]'`);
@@ -70,7 +73,7 @@ app.post('/restart-amq', async (req, res) => {
     else{
       console.log(`[${routeName}] No ownerReferences found, skipping removal`);
     }
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     await executeCommand(`oc patch route ${component}-amq-wconsj-0-svc-rte -n ${namespace} --type=merge -p '{"spec": {"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Allow"}}}'`);
     console.log(`\n[${routeName}] Successfully updated route configuration`);
     
